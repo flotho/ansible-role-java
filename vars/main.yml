@@ -88,9 +88,9 @@ _java_openjdk_package:
       default: openjdk-19-jdk
     21:
       default: openjdk-21-jdk
-java_openjdk_package: "{{ _java_openjdk_package[java_type][java_version | int][ansible_distribution] | default(_java_openjdk_package[java_type][java_version | int]['default'] | default([])) }}"
+java_openjdk_package: "{{ _java_openjdk_package[java_type][java_version|int][ansible_distribution] | default(_java_openjdk_package[java_type][java_version | int]['default'] | default([])) }}"
 
-_java_package:
+_java_package_file:
   jre:
     8:
       deb: jre-8u191-linux-x64.deb
@@ -109,7 +109,22 @@ _java_package:
       deb: jdk-10.0.2_linux-x64_bin.deb
       rpm: jdk-10.0.2_linux-x64_bin.rpm
       targz: jdk-10.0.2_linux-x64_bin.tar.gz
+    11:
+      deb: jdk-11.0.2_linux-x64_bin.deb
+      rpm: jdk-11.0.2_linux-x64_bin.rpm
+      targz: jdk-11.0.2_linux-x64_bin.tar.gz
     21:
       deb: jdk-21_linux-x64_bin.deb
       rpm: jdk-21_linux-x64_bin.rpm
-java_package: "{{ _java_package[java_type][java_version][java_format] | default([]) }}"
+java_package_file: "{{ _java_package_file[java_type][java_version][java_format] | default([]) }}"
+
+_java_package_folder:
+  jre:
+    8: jre-8u191
+    10: jre-10.0.2
+  jdk:
+    8: jdk-8u191
+    10: jdk-10.0.2
+    11: jdk-11.0.2
+    21: jdk-21
+java_package_folder: "{{ _java_package_folder[java_type][java_version] | default('jdk-21') }}"
